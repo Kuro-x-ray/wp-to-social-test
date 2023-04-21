@@ -84,6 +84,10 @@ add_action('save_post', 'enregistrer_champs_personnalises');
 function hide_publish_button() {
     global $post;
 
+    if(null === $post) {
+        return;
+    }
+
     if (!empty(get_post_meta($post->ID, 'texte_twitter', true)) && !empty(get_post_meta($post->ID, 'texte_facebook', true)) && !empty(get_post_meta($post->ID, 'texte_discord', true))) {
         return;
     }
