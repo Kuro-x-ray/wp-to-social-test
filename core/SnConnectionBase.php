@@ -1,29 +1,33 @@
 <?php
 
-abstract class SnConnectionBase implements SnConnectionInterface {
+abstract class SnConnectionBase implements SnConnectionInterface
+{
 
     protected $newStatus;
     protected $oldStatus;
     protected $post;
     protected $config;
 
-    public function __construct($post, $oldStatus, $newStatus) {
+    public function __construct($post, $oldStatus, $newStatus)
+    {
 
         $this->post = $post;
         $this->oldStatus = $oldStatus;
         $this->newStatus = $newStatus;
     }
 
-    public function canPost() {
-        
-        if ($this->newStatus != 'publish' || $this->oldStatus == 'publish' || $this->post->post_type != 'post'){
-            return false; 
-        }else{
+    public function canPost()
+    {
+
+        if ($this->newStatus != 'publish' || $this->oldStatus == 'publish' || $this->post->post_type != 'post') {
+            return false;
+        } else {
             return true;
         }
     }
 
-    public function executePostCurl($url, $postData) {
+    public function executePostCurl($url, $postData)
+    {
 
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
@@ -33,7 +37,8 @@ abstract class SnConnectionBase implements SnConnectionInterface {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0
-        ));
+        )
+        );
         $response = curl_exec($curl);
         $errors = curl_error($curl);
 

@@ -1,19 +1,24 @@
 <?php
 
-class PostToSocialNetworkConfig {
+class PostToSocialNetworkConfig
+{
     private static $instance = null;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function get($key) {
-        
+    public function get($key)
+    {
+
         $config = [
             'tw_account_id' => get_option('tw_account_id'),
             'tw_consumer_key' => get_option('tw_consumer_key'),
@@ -32,7 +37,7 @@ class PostToSocialNetworkConfig {
                 'core/SnPostToSocialNetwork.php'
             ]
         ];
-        
+
         return $config[$key];
     }
 }

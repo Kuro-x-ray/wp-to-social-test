@@ -1,12 +1,15 @@
 <?php
 
-class SnTwitterConnection extends SnConnectionBase {
+class SnTwitterConnection extends SnConnectionBase
+{
 
-    public function __construct($post, $oldStatus, $newStatus) {
+    public function __construct($post, $oldStatus, $newStatus)
+    {
         parent::__construct($post, $oldStatus, $newStatus);
     }
 
-    public function executePost() {
+    public function executePost()
+    {
 
         $settings = array(
             'account_id' => PostToSocialNetworkConfig::getInstance()->get('tw_account_id'),
@@ -16,14 +19,15 @@ class SnTwitterConnection extends SnConnectionBase {
             'access_token' => PostToSocialNetworkConfig::getInstance()->get('tw_access_token'),
             'access_token_secret' => PostToSocialNetworkConfig::getInstance()->get('tw_access_token_secret')
         );
-        
+
         $client = new \Noweh\TwitterApi\Client($settings);
         $tweet_text = get_post_meta($this->post->ID, 'texte_twitter', true) . ' ';
-        $tweet_text .= get_permalink($this->post->ID); 
+        $tweet_text .= get_permalink($this->post->ID);
         $client->tweet()->performRequest('POST', ['text' => $tweet_text]);
     }
 
-    private function get_wordpress_post_hashtags($post_id) {
+    private function get_wordpress_post_hashtags($post_id)
+    {
         // Get post categories
         $categories = wp_get_post_categories($post_id);
 

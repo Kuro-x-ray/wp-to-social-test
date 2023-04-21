@@ -1,6 +1,7 @@
 <?php
 
-interface SnConnectionInterface {
+interface SnConnectionInterface
+{
     function executePost();
     function canPost();
 }

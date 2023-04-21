@@ -1,15 +1,18 @@
 <?php
 
-class SnFacebookConnection extends SnConnectionBase {
+class SnFacebookConnection extends SnConnectionBase
+{
 
-    public function __construct($post, $oldStatus, $newStatus) {
+    public function __construct($post, $oldStatus, $newStatus)
+    {
         parent::__construct($post, $oldStatus, $newStatus);
     }
 
-    public function executePost() {
-        
+    public function executePost()
+    {
+
         $url = 'https://graph.facebook.com/v16.0/jrpgfrance/feed/';
-        
+
         $params = array(
             'message' => get_post_meta($this->post->ID, 'texte_facebook', true),
             'transport' => 'cors',
