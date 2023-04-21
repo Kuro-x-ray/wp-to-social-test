@@ -4,7 +4,7 @@
  * Plugin Name: Wp 2 Social
  * Plugin URI: https://jrpgfr.net
  * Description: Announces new WordPress posts on Discord, Facebook, Twitter.
- * Version: 0.1
+ * Version: 0.2
  * Author: Mazzola Gino
  * Author URI: https://jrpgfr.net
  */
@@ -91,52 +91,53 @@ function hide_publish_button() {
     if (!empty(get_post_meta($post->ID, 'texte_twitter', true)) && !empty(get_post_meta($post->ID, 'texte_facebook', true)) && !empty(get_post_meta($post->ID, 'texte_discord', true))) {
         return;
     }
+
     ?>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script type="text/javascript">
-function verifier_champs_personnalises_avant_publication() {
-    // Récupérer l'ID de l'article en cours d'édition
-    const post_id = document.querySelector('input[name="post_ID"]').value;
+        function verifier_champs_personnalises_avant_publication() {
+            // Récupérer l'ID de l'article en cours d'édition
+            const post_id = document.querySelector('input[name="post_ID"]').value;
 
-    // Vérifier si l'article est un article existant
-    if (post_id) {
-        // Récupérer les valeurs des champs personnalisés pour l'article
-        const texte_twitter = document.getElementById('texte_twitter').value;
-        const texte_facebook = document.getElementById('texte_facebook').value;
-        const texte_discord = document.getElementById('texte_discord').value;
+            // Vérifier si l'article est un article existant
+            if (post_id) {
+                // Récupérer les valeurs des champs personnalisés pour l'article
+                const texte_twitter = document.getElementById('texte_twitter').value;
+                const texte_facebook = document.getElementById('texte_facebook').value;
+                const texte_discord = document.getElementById('texte_discord').value;
 
-        // Vérifier si les champs sont vides
-        if (!texte_twitter || !texte_facebook || !texte_discord) {
-            // Désactiver le bouton Publier
-            document.getElementById('publish').setAttribute('disabled', true);
-
-            // Ajouter un message d'erreur
-            const message = document.createElement('div');
-            message.classList.add('error', 'below-h2');
-            message.innerHTML = '<p>Les champs personnalisés texte_twitter, texte_facebook et texte_discord sont obligatoires.</p>';
-            document.getElementById('titlediv').after(message);
-
-            // Vérifier les champs avant de publier
-            document.getElementById('publish').addEventListener('click', function(event) {
+                // Vérifier si les champs sont vides
                 if (!texte_twitter || !texte_facebook || !texte_discord) {
-                    event.preventDefault();
-                    message.style.display = 'block';
-                    return false;
-                }
-            });
+                    // Désactiver le bouton Publier
+                    document.getElementById('publish').setAttribute('disabled', true);
 
-            // Cacher le message d'erreur si les champs sont remplis
-            document.querySelectorAll('#texte_twitter, #texte_facebook, #texte_discord').forEach(function(input) {
-                input.addEventListener('input', function() {
-                    if (texte_twitter && texte_facebook && texte_discord) {
-                        message.style.display = 'none';
-                        document.getElementById('publish').removeAttribute('disabled');
-                    }
-                });
-            });
+                    // Ajouter un message d'erreur
+                    const message = document.createElement('div');
+                    message.classList.add('error', 'below-h2');
+                    message.innerHTML = '<p>Les champs personnalisés texte_twitter, texte_facebook et texte_discord sont obligatoires.</p>';
+                    document.getElementById('titlediv').after(message);
+
+                    // Vérifier les champs avant de publier
+                    document.getElementById('publish').addEventListener('click', function(event) {
+                        if (!texte_twitter || !texte_facebook || !texte_discord) {
+                            event.preventDefault();
+                            message.style.display = 'block';
+                            return false;
+                        }
+                    });
+
+                    // Cacher le message d'erreur si les champs sont remplis
+                    document.querySelectorAll('#texte_twitter, #texte_facebook, #texte_discord').forEach(function(input) {
+                        input.addEventListener('input', function() {
+                            if (texte_twitter && texte_facebook && texte_discord) {
+                                message.style.display = 'none';
+                                document.getElementById('publish').removeAttribute('disabled');
+                            }
+                        });
+                    });
+                }
+            }
         }
-    }
-}
         
         $(document).ready(() => {
             verifier_champs_personnalises_avant_publication();
