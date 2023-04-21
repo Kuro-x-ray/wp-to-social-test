@@ -10,11 +10,15 @@ class SnDiscordConnection extends SnConnectionBase
 
     public function executePost()
     {
+        if (!PostToSocialNetworkConfig::getInstance()->get('authorize_discord')) {
+            return;
+        }
 
         $this->executePostCurl(
             PostToSocialNetworkConfig::getInstance()->get('dc_webhook_url'),
-            array('content' => $this->constructMessage())
+            ['content' => $this->constructMessage()]
         );
+
     }
 
     private function constructMessage()
